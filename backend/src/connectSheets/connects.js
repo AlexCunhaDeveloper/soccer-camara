@@ -47,7 +47,7 @@ class Connection {
     
        return paysanduJogadores
     }
-    async jogadoresPaysandu(){
+    async jogos(){
         const documento = await this.conexao()
         //const documento = await remo
         await documento.loadInfo();

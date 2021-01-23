@@ -1,10 +1,10 @@
 
 const Conections = require('../connectSheets/connects')
-class ControllerRemo {
+class ControllerJogos {
     async index(req, res){
-        const jogadores = await Conections.jogadoresRemo()
+        const jogos = await Conections.jogos()
                 
-       return res.json(jogadores)
+       return res.json(jogos)
     }
 
     inicializar(){
@@ -14,5 +14,5 @@ class ControllerRemo {
 
 
 
-module.exports = new ControllerRemo
+module.exports = new ControllerJogos
 
