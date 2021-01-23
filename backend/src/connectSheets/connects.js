@@ -25,20 +25,51 @@ class Connection {
         await documento.loadInfo();
         let sheet = await documento.sheetsByIndex[1]; 
         let rows = await sheet.getRows()
-        let RemoJogadores = []
+        let remoJogadores = []
          rows.map(row => {
-            RemoJogadores.push({"jogador": `${row.Jogador}`, "camisa": `${row.Camisa}`})
+            remoJogadores.push({"jogador": `${row.Jogador}`, "camisa": `${row.Camisa}`})
             //return jogadores
         })
-       return RemoJogadores
+       return remoJogadores
+    }
+
+    async jogadoresPaysandu(){
+        const documento = await this.conexao()
+        //const documento = await remo
+        await documento.loadInfo();
+        let sheet = await documento.sheetsByIndex[0]; 
+        let rows = await sheet.getRows()
+        let paysanduJogadores = []
+         rows.map(row => {
+            paysanduJogadores.push({"jogador": `${row.Jogador}`, "camisa": `${row.Camisa}`})
+            //return jogadores
+        })
+    
+       return paysanduJogadores
+    }
+    async jogadoresPaysandu(){
+        const documento = await this.conexao()
+        //const documento = await remo
+        await documento.loadInfo();
+        let sheet = await documento.sheetsByIndex[2]; 
+        let rows = await sheet.getRows()
+        let jogos = []
+         rows.map(row => {
+            jogos.push({"timePaysandu": `${row.timePaysandu}`, "timeRemo": `${row.timeRemo}`, 
+                        "resultado":`${row.resultado}`, "golPaysandu": `${row.golPaysandu}`, "golRemo":`${row.golRemo}`})
+            //return jogadores
+        })
+        console.log(jogos)
+       return jogos
     }
 
     inicializar(){
-        this.jogadoresRemo()
+        this.jogadoresPaysandu()
     }
 }
 
-
+const connect = new Connection
+connect.inicializar()
 module.exports = new Connection;
 
 
