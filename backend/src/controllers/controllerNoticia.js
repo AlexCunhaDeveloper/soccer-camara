@@ -1,18 +1,19 @@
 
 const Conections = require('../connectSheets/connects')
-class ControllerJogos {
+class ControllerNoticia {
     async index(req, res){
         try {
 
-            const jogos = await Conections.jogos()
-           return  res.status(200).json(jogos)
+            const noticia = await Conections.noticias()       
+            return res.status(200).json(noticia)
         }catch(error){
             return res.status(500).json({error: 'Error tente novamente depois'})
         }
     }
+
 }
 
 
 
-module.exports = new ControllerJogos
+module.exports = new ControllerNoticia
 

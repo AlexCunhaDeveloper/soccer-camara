@@ -1,22 +1,22 @@
-const creds = require('../../camara-302118-4508d2118ba2.json')
-const planilha = require('../../documentos.json')
-
+require('dotenv').config()
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const { client_email, private_key } = creds
-const TOKEN_KEY = private_key
-const TOKEN_EMAIL = client_email
+
 
 class Connection {
     
     async conexao(){
-        const documento = new  GoogleSpreadsheet(planilha.futebol)
-        await documento.useServiceAccountAuth({
-            client_email: TOKEN_EMAIL,
-            private_key: TOKEN_KEY
-            
-        })
+        try{
 
-        return documento
+            const documento = new  GoogleSpreadsheet(process.env.DOCUMENT_FUTEBOL)
+            await documento.useServiceAccountAuth({
+                client_email: process.env.client_email,
+                private_key: process.env.private_key  
+            })
+    
+            return documento
+        }catch(error){
+            console.log(error)
+        }
     }
 
     async jogadoresRemo(){
@@ -56,11 +56,24 @@ class Connection {
         let jogos = []
          rows.map(row => {
             jogos.push({"timePaysandu": `${row.timePaysandu}`, "timeRemo": `${row.timeRemo}`, 
-                        "resultado":`${row.resultado}`, "golPaysandu": `${row.golPaysandu}`, "golRemo":`${row.golRemo}`})
+                        "resultado":`${row.resultado}`, "golPaysandu": `${row.golPaysandu}`, "golRemo":`${row.golRemo}`, "datajogo":`${row.jogo}`})
             //return jogadores
         })
-        console.log(jogos)
        return jogos
+    }
+    async noticias(){
+        const documento = await this.conexao()
+        //const documento = await remo
+        await documento.loadInfo();
+        let sheet = await documento.sheetsByIndex[3]; 
+        let rows = await sheet.getRows()
+        let noticias = []
+         rows.map(row => {
+            noticias.push({"noticias": `${row.noticia}`})
+            //return jogadores
+        })
+        
+       return noticias
     }
 
     inicializar(){
@@ -68,8 +81,7 @@ class Connection {
     }
 }
 
-const connect = new Connection
-connect.inicializar()
+
 module.exports = new Connection;
 
 

@@ -2,14 +2,16 @@
 const Conections = require('../connectSheets/connects')
 class ControllerPaysandu {
     async index(req, res){
-        const Jogadores = await Conections.jogadoresPaysandu()
-                
-       return res.json(Jogadores)
+
+        try {
+            const Jogadores = await Conections.jogadoresPaysandu()  
+            return res.status(200).json(Jogadores)
+        }catch(error){
+            return res.status(500).json({error: 'Error tente novamente depois'})   
+        }
     }
 
-    inicializar(){
-        this.index()
-    }
+    
 }
 
 
